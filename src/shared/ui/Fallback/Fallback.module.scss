@@ -1,0 +1,32 @@
+.fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  font-family: "Inter", sans-serif;
+  color: #343a40;
+  text-align: center;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.fallbackP {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.6;
+  max-width: 480px;
+  margin: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,32 @@
+.button {
+  padding: 0;
+  position: absolute;
+  background: transparent;
+  border: none;
+  display: flex;
+  gap: 2px;
+  cursor: pointer;
+  align-items: center;
+  right: 18.5px;
+  top: 9px;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  background-color: #b4b4b4;
+  border-radius: 50%;
+}
+.buttonUp {
+  display: flex;
+  justify-content: center;
+  width: 28px;
+  height: 26px;
+  background-color: #8585854d;
+  border-radius: 11px;
+  backdrop-filter: blur(4.400000095367432px);
+}
+.buttonUp .dot {
+  backdrop-filter: blur(4.400000095367432px);
+  background-color: white;
+}

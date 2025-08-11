@@ -1,0 +1,161 @@
+.PreviewFrameList {
+  display: flex;
+  flex-direction: column;
+  gap: 2.7rem; //2.3125rem;
+  width: 100%;
+  max-width: 21.5625rem;
+}
+.PreviewFrameListBlock {
+  position: relative;
+  box-sizing: border-box;
+  min-height: 5.625rem;
+  border-radius: 1.5625rem;
+  box-shadow: 0px 1px 8px 0px #0000001a;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  background-color: #ffffff;
+}
+
+.PreviewFrameListTitle {
+  margin-left: 4.1875rem;
+  font-family: "Urbanist", sans-serif;
+  color: #3b4552ec;
+  font-size: 0.875rem;
+  line-height: 140%;
+  letter-spacing: -0.01em;
+  margin-bottom: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
+
+  &::after {
+    content: "·············";
+    color: transparent;
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+.PreviewFrameListTitleSpicing::after {
+  content: "·····················";
+}
+.PreviewFrameListTitleLow::after {
+  content: "··························";
+}
+
+.PreviewFrameListImage {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  width: 59px;
+  height: 58px;
+  border-radius: 13px;
+  background-color: rgba(128, 128, 128, 0.486);
+}
+.indicatorNone::after {
+  content: "";
+}
+
+.settings {
+  border: 1px solid #2bd1ff;
+  margin-top: -4.75rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  box-shadow: 0 4px 6px -3px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.05);
+}
+.editableTextArea {
+  all: unset;
+  vertical-align: middle;
+  width: 100%;
+  max-width: 245px;
+  height: auto;
+  margin-left: 4.1875rem;
+  font-family: "Urbanist", sans-serif;
+  color: #3b4552ec;
+  font-size: 0.875rem;
+  line-height: 140%;
+  letter-spacing: -0.01em;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: pre-wrap;
+  resize: none;
+  overflow: hidden;
+}
+.PreviewFrameListBlock {
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 1.5625rem;
+  box-shadow: 0px 1px 8px 0px #0000001a;
+  background-color: #ffffff;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 0.5rem;
+}
+
+.orientation_note .editableTextArea {
+  margin-left: 0;
+  min-width: 20rem;
+}
+.orientation_note .PreviewFrameListImage {
+  display: none;
+}
+.orientation_note .PreviewFrameListTitle {
+  margin: 0;
+}
+.orientation_left .PreviewFrameListTitle {
+  margin-top: 0;
+}
+.orientation_left .editableTextArea {
+  min-width: 12rem;
+}
+
+.orientation_up .PreviewFrameListImage {
+  position: static;
+  width: 21.4375rem;
+  height: 11.3125rem;
+  margin-left: -0.97rem;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin-bottom: 0.25px;
+  margin-top: -0.98rem;
+}
+.orientation_up .PreviewFrameListTitle {
+  margin: 0;
+}
+.orientation_down .PreviewFrameListImage {
+  position: static;
+  width: 21.4375rem;
+  height: 11.3125rem;
+  margin-left: -0.99rem;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 24px;
+  border-bottom-left-radius: 24px;
+  margin-bottom: 0.25px;
+}
+.orientation_down .editableTextArea,
+.orientation_up .editableTextArea {
+  margin-left: 0;
+  min-width: 20rem;
+}
+.orientation_down .PreviewFrameListTitle {
+  width: 20rem;
+  margin: 0;
+  &::after {
+    content: none;
+  }
+}
+.orientation_down {
+  padding-bottom: 0;
+}
+.indicatorDown {
+  background-color: #3f3f3f66;
+  color: white;
+  backdrop-filter: blur(9px);
+  border: none;
+}

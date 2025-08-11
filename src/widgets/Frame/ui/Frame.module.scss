@@ -1,0 +1,12 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2.5rem;
+  margin-top: 2.7rem; //2.3125rem;
+  gap: 2.5625rem;
+}
+
+.columns {
+  display: flex;
+  gap: 2.5625rem;
+}
