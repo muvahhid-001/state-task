@@ -22,10 +22,18 @@ export const usePreviewFrame = ({ blocks }: PreviewFrameProps) => {
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height =
-        textareaRef.current.scrollHeight + "px";
+      textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
     }
   }, [activeSettingsId, draftText]);
+
+  useEffect(() => {
+    if (activeSettingsId && textareaRef.current) {
+      const el = textareaRef.current;
+      el.focus();
+      const length = el.value.length;
+      el.setSelectionRange(length, length);
+    }
+  }, [activeSettingsId]);
 
   const toggleSettings = useCallback((id: string) => {
     setActiveSettingsId((prev) => (prev === id ? null : id));
