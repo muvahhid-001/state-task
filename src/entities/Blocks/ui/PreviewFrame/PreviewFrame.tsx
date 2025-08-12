@@ -64,6 +64,7 @@ export const PreviewFrame = (props: PreviewFrameProps) => {
                   ref={textareaRef}
                   className={styles.editableTextArea}
                   value={draftText}
+                  placeholder="Напишите вашу идею"
                   onChange={(e) => handleTextChange(e.target.value)}
                   rows={1}
                 />
