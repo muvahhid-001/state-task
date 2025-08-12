@@ -5,17 +5,11 @@ import {
   selectBlocks,
   setOrientation,
 } from "@entities/Blocks/model/blockSlice";
+import { orientationMap } from "./lib/constants";
 
 interface SelectViewProps {
   activeSettingsId: string;
 }
-
-const orientationMap = {
-  note: "/images/note.svg",
-  down: "/images/downImage.svg",
-  up: "/images/upImage.svg",
-  left: "/images/leftImage.svg",
-};
 
 const SelectView: FC<SelectViewProps> = ({ activeSettingsId }) => {
   const dispatch = useDispatch();

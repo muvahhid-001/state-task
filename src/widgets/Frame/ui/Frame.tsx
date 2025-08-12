@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { PreviewFrame } from "@entities/Blocks/ui/PreviewFrame/PreviewFrame";
 import { useAppSelector } from "@/shared/hooks";
 import { selectBlocks } from "@entities/Blocks/model/blockSlice";
@@ -10,27 +9,16 @@ import styles from "./Frame.module.scss";
 
 export const Frame = () => {
   const blocks = useAppSelector(selectBlocks);
+  const half = Math.ceil(blocks.length / 2);
+  const firstHalf = blocks.slice(0, half);
+  const secondHalf = blocks.slice(half);
 
-  const groupedBlocks = useMemo(
-    () => ({
-      note: blocks.filter((b) => b.orientation === "note"),
-      left: blocks.filter((b) => b.orientation === "left"),
-      down: blocks.filter((b) => b.orientation === "down"),
-      up: blocks.filter((b) => b.orientation === "up"),
-    }),
-    [blocks]
-  );
-
-  const renderFrame = (
-    orientation: keyof typeof groupedBlocks,
-    message: string
-  ) => {
-    const group = groupedBlocks[orientation];
-    if (group.length === 0) return null;
+  const renderFrame = (blocks: typeof firstHalf, message: string) => {
+    if (blocks.length === 0) return null;
 
     return (
       <ErrorBoundary fallback={<Fallback message={message} />}>
-        <PreviewFrame blocks={group} />
+        <PreviewFrame blocks={blocks} />
       </ErrorBoundary>
     );
   };
@@ -38,10 +26,8 @@ export const Frame = () => {
   return (
     <section className={styles.section}>
       <div className={styles.columns}>
-        {renderFrame("note", "Ошибка в Note")}
-        {renderFrame("left", "Ошибка в Left")}
-        {renderFrame("down", "Ошибка в Down")}
-        {renderFrame("up", "Ошибка в Up")}
+        {renderFrame(firstHalf, "Ошибка в первой форме")}
+        {renderFrame(secondHalf, "Ошибка во второй форме")}
       </div>
       <DevControls />
     </section>

@@ -34,10 +34,8 @@
   cursor: pointer;
   display: flex;
   justify-content: center;
-  min-width: 1.5rem;
-  min-height: 1.5rem;
-  border-radius: 50%;
-  background-color: #dcdcdc;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 .active {
   background: linear-gradient(
@@ -46,4 +44,10 @@
     #34b8ff 33.26%,
     #229cfd 113.78%
   ) !important;
+}
+.save {
+  padding: 5.5px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background-color: #dcdcdc;
 }

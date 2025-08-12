@@ -8,63 +8,64 @@ export const usePreviewFrame = ({ blocks }: PreviewFrameProps) => {
   const dispatch = useDispatch();
   const handleCountChange = useHandleCountChange();
 
-  const [activeSettingsId, setActiveSettingsId] = useState<string | null>(null);
-  const [draftText, setDraftText] = useState<string>("");
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [activeSettingsId, setActiveSettingsId] = useState<string[]>([]);
+  const [draftText, setDraftText] = useState<Record<string, string>>({});
+  const textareaRefs = useRef<Record<string, HTMLTextAreaElement | null>>({});
 
   useEffect(() => {
-    if (activeSettingsId) {
-      const block = blocks.find((b) => b.id === activeSettingsId);
-      setDraftText(block?.text ?? "");
-    }
-  }, [activeSettingsId, blocks]);
-
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
-    }
-  }, [activeSettingsId, draftText]);
-
-  useEffect(() => {
-    if (activeSettingsId && textareaRef.current) {
-      const el = textareaRef.current;
-      el.focus();
-      const length = el.value.length;
-      el.setSelectionRange(length, length);
-    }
+    activeSettingsId.forEach((id) => {
+      const ref = textareaRefs.current[id];
+      if (ref) {
+        const length = ref.value.length;
+        ref.focus();
+        ref.setSelectionRange(length, length);
+      }
+    });
   }, [activeSettingsId]);
 
+  useEffect(() => {
+    activeSettingsId.forEach((id) => {
+      const block = blocks.find((b) => b.id === id);
+      if (block && draftText[id] === undefined) {
+        setDraftText((prev) => ({ ...prev, [id]: block.text ?? "" }));
+      }
+    });
+  }, [activeSettingsId, blocks, draftText]);
+
   const toggleSettings = useCallback((id: string) => {
-    setActiveSettingsId((prev) => (prev === id ? null : id));
+    setActiveSettingsId((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
   }, []);
 
-  const handleTextChange = useCallback((newText: string) => {
-    setDraftText(newText);
+  const handleTextChange = useCallback((id: string, newText: string) => {
+    setDraftText((prev) => ({ ...prev, [id]: newText }));
   }, []);
 
   const handleSaveSettings = useCallback(() => {
-    if (activeSettingsId) {
-      dispatch(setText({ id: activeSettingsId, text: draftText }));
-      setActiveSettingsId(null);
-    }
+    activeSettingsId.forEach((id) => {
+      dispatch(setText({ id, text: draftText[id] ?? "" }));
+    });
+    setActiveSettingsId([]);
   }, [activeSettingsId, draftText, dispatch]);
 
-  const handleCloseSettings = useCallback(() => {
-    setActiveSettingsId(null);
+  const handleCloseSettings = useCallback((id: string) => {
+    setActiveSettingsId((prev) => prev.filter((i) => i !== id));
   }, []);
 
-  const isTextChanged = useCallback(() => {
-    if (!activeSettingsId) return false;
-    const block = blocks.find((b) => b.id === activeSettingsId);
-    return block?.text !== draftText;
-  }, [activeSettingsId, blocks, draftText]);
+  const isTextChanged = useCallback(
+    (id: string) => {
+      const block = blocks.find((b) => b.id === id);
+      return block?.text !== draftText[id];
+    },
+    [blocks, draftText]
+  );
 
   return {
     blocks,
     activeSettingsId,
     draftText,
-    textareaRef,
+    textareaRefs,
     toggleSettings,
     handleTextChange,
     handleSaveSettings,
