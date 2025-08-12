@@ -81,6 +81,9 @@
   white-space: pre-wrap;
   resize: none;
   overflow: hidden;
+  &::placeholder {
+    color: #b7b7b7ab;
+  }
 }
 .PreviewFrameListBlock {
   position: relative;
