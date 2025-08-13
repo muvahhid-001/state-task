@@ -78,6 +78,7 @@
 }
 .orientation_down.PreviewFrameListBlock {
   flex-direction: column-reverse;
+  padding-bottom: 1px;
 }
 .orientation_down .editableTextArea {
   width: 20rem;
@@ -94,7 +95,7 @@
 
 .orientation_up .PreviewFrameListImage {
   position: static;
-  width: 21.4375rem;
+  width: 21.39rem;
   align-self: center;
   height: 11.3125rem;
   border-top-left-radius: 24px;
@@ -102,7 +103,7 @@
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
   margin-bottom: 0.25px;
-  margin-top: -0.98rem;
+  margin-top: -0.96rem;
 }
 .orientation_up .PreviewFrameListTitle {
   width: 20rem;
@@ -111,13 +112,12 @@
 .orientation_down .PreviewFrameListImage {
   position: static;
   align-self: center;
-  width: 21.4375rem;
+  width: 21.39rem;
   height: 11.3125rem;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 24px;
   border-bottom-left-radius: 24px;
-  margin-bottom: 0.25px;
 }
 .orientation_up .editableTextArea {
   margin-left: 0;
