@@ -13,13 +13,11 @@ interface SelectViewProps {
 }
 
 const SelectView: FC<SelectViewProps> = ({
-  activeSettingsId,
   currentOrientation,
   onSelect,
   onOrientationSelect,
 }) => {
-  const blocks = useSelector(selectBlocks);
-  const activeBlock = blocks.find((b) => b.id === activeSettingsId);
+  useSelector(selectBlocks);
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     const orientation = e.currentTarget.dataset.orientation as Orientation;

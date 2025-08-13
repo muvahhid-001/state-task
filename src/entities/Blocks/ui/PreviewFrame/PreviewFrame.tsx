@@ -16,7 +16,6 @@ export const PreviewFrame = (props: PreviewFrameProps) => {
     handleTextChange,
     handleSaveSettings,
     handleCloseSettings,
-    isTextChanged,
     handleCountChange,
     textareaRefs,
     previewOrientations,
