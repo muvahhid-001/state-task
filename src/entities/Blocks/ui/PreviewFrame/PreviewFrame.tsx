@@ -19,6 +19,8 @@ export const PreviewFrame = (props: PreviewFrameProps) => {
     isTextChanged,
     handleCountChange,
     textareaRefs,
+    previewOrientations,
+    handleOrientationPreview,
   } = usePreviewFrame(props);
 
   const titleRefs = useRef<Record<string, HTMLParagraphElement | null>>({});
@@ -41,11 +43,14 @@ export const PreviewFrame = (props: PreviewFrameProps) => {
         block.originalCount !== undefined &&
         block.count !== block.originalCount;
       const isSettingsVisible = activeSettingsId.includes(block.id);
+      const currentText = draftText[block.id]?.trim() ?? "";
+      const canSave = currentText.length > 0;
+      const orientation = previewOrientations[block.id] ?? block.orientation;
 
       const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === "Enter") {
           e.preventDefault();
-          handleSaveSettings();
+          if (canSave) handleSaveSettings();
         }
       };
 
@@ -55,16 +60,17 @@ export const PreviewFrame = (props: PreviewFrameProps) => {
             <SettingsBlock
               onClose={() => handleCloseSettings(block.id)}
               onSave={handleSaveSettings}
-              isTextChanged={isTextChanged(block.id)}
+              isTextChanged={canSave}
               activeSettingsId={block.id}
+              onOrientationPreview={handleOrientationPreview}
             />
           )}
           <div
             className={`${styles.PreviewFrameListBlock} ${
-              styles[`orientation_${block.orientation}`]
+              styles[`orientation_${orientation}`]
             } ${isSettingsVisible ? styles.settings : ""}`}
           >
-            {["up", "left", "note", "down"].includes(block.orientation) &&
+            {["up", "left", "note", "down"].includes(orientation) &&
               block.image?.trim() && (
                 <img
                   src={block.image}
@@ -85,7 +91,6 @@ export const PreviewFrame = (props: PreviewFrameProps) => {
                 onChange={(e) => handleTextChange(block.id, e.target.value)}
                 onKeyDown={handleKeyDown}
                 minRows={1}
-                // автофокус переносится в хук
               />
             ) : (
               <p
@@ -105,13 +110,13 @@ export const PreviewFrame = (props: PreviewFrameProps) => {
                   <Indicator
                     count={block.count}
                     isActive={isChanged}
-                    orientation={block.orientation}
+                    orientation={orientation}
                     height={heights[block.id] ?? undefined}
                     onClick={() => handleCountChange(block.id, block.count + 1)}
                     className={`${
-                      block.orientation === "down"
+                      orientation === "down"
                         ? styles.indicatorDown
-                        : block.orientation === "up"
+                        : orientation === "up"
                         ? styles.indicatorTheme
                         : ""
                     }`}
@@ -122,7 +127,7 @@ export const PreviewFrame = (props: PreviewFrameProps) => {
             {!isSettingsVisible && (
               <DotsButton
                 onClick={() => toggleSettings(block.id)}
-                orientation={block.orientation}
+                orientation={orientation}
               />
             )}
           </div>
@@ -136,11 +141,12 @@ export const PreviewFrame = (props: PreviewFrameProps) => {
     handleTextChange,
     handleCloseSettings,
     handleSaveSettings,
-    isTextChanged,
     toggleSettings,
     handleCountChange,
     heights,
     textareaRefs,
+    previewOrientations,
+    handleOrientationPreview,
   ]);
 
   return <div className={styles.PreviewFrameList}>{blocksMapped}</div>;

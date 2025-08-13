@@ -73,7 +73,6 @@ const initialState: Frame[] = [
     orientation: "up",
     hasImage: true,
   },
-
   {
     id: "block-8",
     text: "Drinking water isn't just about quenching your thirst. It plays a crucial role in maintaining the proper functing of your body a bbbbbbbbb",
@@ -111,10 +110,19 @@ const blocksSlice = createSlice({
       const block = state.find((b) => b.id === action.payload.id);
       if (block) block.orientation = action.payload.orientation;
     },
+    setImage: (state, action: PayloadAction<{ id: string; image: string }>) => {
+      const block = state.find((b) => b.id === action.payload.id);
+      if (block) {
+        block.image = action.payload.image;
+        block.hasImage =
+          action.payload.image !== "" &&
+          action.payload.image !== "/images/noneImage.png";
+      }
+    },
   },
 });
 
-export const { setCount, setOriginalCount, setText, setOrientation } =
+export const { setCount, setOriginalCount, setText, setOrientation, setImage } =
   blocksSlice.actions;
 export const selectBlocks = (state: { blocks: Frame[] }) => state.blocks;
 export default blocksSlice.reducer;

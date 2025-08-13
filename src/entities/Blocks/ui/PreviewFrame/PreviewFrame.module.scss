@@ -21,15 +21,13 @@
   width: 100%;
   font-family: "Urbanist", sans-serif;
   color: #3b4552ec;
-  height: 100%;
   font-size: 0.875rem;
-  line-height: 140%;
+  line-height: 1.4;
   letter-spacing: -0.01em;
   margin: 0;
   overflow-wrap: break-word;
   word-break: break-word;
   white-space: normal;
-  height: auto;
 }
 
 .PreviewFrameListImage {
@@ -38,9 +36,9 @@
   width: 59px;
   height: 58px;
   border-radius: 13px;
-
   background-color: rgba(128, 128, 128, 0.486);
 }
+
 .indicatorNone::after {
   content: "";
 }
@@ -54,21 +52,33 @@
 }
 
 .editableTextArea {
-  all: unset;
+  box-sizing: border-box;
+  min-height: 1.5em;
+  padding: 0;
   font-family: "Urbanist", sans-serif;
   color: #3b4552ec;
   font-size: 0.875rem;
-  width: 20rem;
-  line-height: 140%;
+  width: 320px;
+  line-height: 1.4;
   letter-spacing: -0.01em;
   overflow-wrap: break-word;
   word-break: break-word;
   white-space: pre-wrap;
   resize: none;
-  overflow: hidden;
+  overflow: visible;
   margin: auto 0;
+  border: none;
+  outline: none;
+  background: transparent;
+
   &::placeholder {
     color: #b7b7b7ab;
+  }
+
+  &:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
   }
 }
 
@@ -76,21 +86,26 @@
 .orientation_up.PreviewFrameListBlock {
   flex-direction: column;
 }
+
 .orientation_down.PreviewFrameListBlock {
   flex-direction: column-reverse;
   padding-bottom: 1px;
 }
+
 .orientation_down .editableTextArea {
   width: 20rem;
 }
+
 .orientation_left .editableTextArea {
   align-self: start;
 }
+
 .orientation_note .PreviewFrameListImage {
   display: none;
 }
+
 .orientation_note.PreviewFrameListBlock {
-  min-height: 68px;
+  padding-right: 14px;
 }
 
 .orientation_up .PreviewFrameListImage {
@@ -105,6 +120,7 @@
   margin-bottom: 0.25px;
   margin-top: -0.96rem;
 }
+
 .orientation_up .PreviewFrameListTitle {
   width: 20rem;
 }
@@ -119,20 +135,23 @@
   border-bottom-right-radius: 24px;
   border-bottom-left-radius: 24px;
 }
+
 .orientation_up .editableTextArea {
   margin-left: 0;
   min-width: 20rem;
 }
+
 .orientation_down .PreviewFrameListTitle {
   width: 20rem;
-
   &::after {
     content: none;
   }
 }
+
 .orientation_down {
   padding-bottom: 0;
 }
+
 .indicatorDown {
   position: absolute;
   bottom: 1rem;

@@ -1,27 +1,30 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import type { FC, MouseEventHandler } from "react";
 import styles from "./SelectView.module.scss";
-import {
-  selectBlocks,
-  setOrientation,
-} from "@entities/Blocks/model/blockSlice";
+import { selectBlocks } from "@entities/Blocks/model/blockSlice";
 import { orientationMap } from "./lib/constants";
+import type { Orientation } from "@entities/Blocks/model/blockSlice";
 
 interface SelectViewProps {
   activeSettingsId: string;
+  currentOrientation: Orientation;
+  onSelect: () => void;
+  onOrientationSelect: (orientation: Orientation) => void;
 }
 
-const SelectView: FC<SelectViewProps> = ({ activeSettingsId }) => {
-  const dispatch = useDispatch();
+const SelectView: FC<SelectViewProps> = ({
+  activeSettingsId,
+  currentOrientation,
+  onSelect,
+  onOrientationSelect,
+}) => {
   const blocks = useSelector(selectBlocks);
   const activeBlock = blocks.find((b) => b.id === activeSettingsId);
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-    const orientation = e.currentTarget.dataset
-      .orientation as keyof typeof orientationMap;
-    if (activeBlock && orientation) {
-      dispatch(setOrientation({ id: activeBlock.id, orientation }));
-    }
+    const orientation = e.currentTarget.dataset.orientation as Orientation;
+    onOrientationSelect(orientation);
+    onSelect();
   };
 
   return (
@@ -31,7 +34,7 @@ const SelectView: FC<SelectViewProps> = ({ activeSettingsId }) => {
           key={key}
           data-orientation={key}
           className={`${styles.button} ${
-            activeBlock?.orientation === key ? styles.active : ""
+            currentOrientation === key ? styles.active : ""
           }`}
           onClick={handleClick}
           type="button"

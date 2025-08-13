@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHandleCountChange } from "./useHandleCountChange";
 import { setText } from "@/entities/Blocks/model/blockSlice";
 import type { PreviewFrameProps } from "@/entities/Blocks/model/types";
+import type { Orientation } from "@/entities/Blocks/model/blockSlice";
 
 export const usePreviewFrame = ({ blocks }: PreviewFrameProps) => {
   const dispatch = useDispatch();
@@ -10,6 +11,9 @@ export const usePreviewFrame = ({ blocks }: PreviewFrameProps) => {
 
   const [activeSettingsId, setActiveSettingsId] = useState<string[]>([]);
   const [draftText, setDraftText] = useState<Record<string, string>>({});
+  const [previewOrientations, setPreviewOrientations] = useState<
+    Record<string, Orientation>
+  >({});
   const textareaRefs = useRef<Record<string, HTMLTextAreaElement | null>>({});
 
   useEffect(() => {
@@ -47,18 +51,38 @@ export const usePreviewFrame = ({ blocks }: PreviewFrameProps) => {
       dispatch(setText({ id, text: draftText[id] ?? "" }));
     });
     setActiveSettingsId([]);
+    setDraftText({});
+    setPreviewOrientations({});
   }, [activeSettingsId, draftText, dispatch]);
 
   const handleCloseSettings = useCallback((id: string) => {
     setActiveSettingsId((prev) => prev.filter((i) => i !== id));
+    setDraftText((prev) => {
+      const updated = { ...prev };
+      delete updated[id];
+      return updated;
+    });
+    setPreviewOrientations((prev) => {
+      const updated = { ...prev };
+      delete updated[id];
+      return updated;
+    });
   }, []);
 
   const isTextChanged = useCallback(
     (id: string) => {
       const block = blocks.find((b) => b.id === id);
-      return block?.text !== draftText[id];
+      const current = draftText[id]?.trim() ?? "";
+      return current.length > 0 && block?.text !== current;
     },
     [blocks, draftText]
+  );
+
+  const handleOrientationPreview = useCallback(
+    (id: string, orientation: Orientation) => {
+      setPreviewOrientations((prev) => ({ ...prev, [id]: orientation }));
+    },
+    []
   );
 
   return {
@@ -72,5 +96,7 @@ export const usePreviewFrame = ({ blocks }: PreviewFrameProps) => {
     handleCloseSettings,
     isTextChanged,
     handleCountChange,
+    previewOrientations,
+    handleOrientationPreview,
   };
 };
